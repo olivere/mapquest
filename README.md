@@ -29,6 +29,11 @@ look like a bit like this:
 yield valid results. Get your own key instead.
 [It's free!](http://developer.mapquest.com/web/products/open))
 
+After you created the file, you can run tests as usual:
+
+    $ go test
+
+
 ## Creating a client
 
 To use the various APIs, you first need to create a client.
