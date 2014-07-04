@@ -14,7 +14,7 @@ is not production quality yet. We use it in parts of our applications,
 but its use is limited. Bugs will be fixed when found. If you find a
 bug, report it or--even better--send a pull request.
 
-## Access Key
+## Testing
 
 To run the tests, you need to add a file `ACCESS_KEY` to the packages root
 directory. Paste you MapQuest access key there.
