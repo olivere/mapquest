@@ -117,5 +117,5 @@ Further details can be found in the
 # License
 
 This code comes with a [MIT
-license](https://github.com/olivere/mapbox/blob/master/LICENSE).
+license](https://github.com/olivere/mapquest/blob/master/LICENSE).
 
