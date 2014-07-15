@@ -29,7 +29,7 @@ func TestStaticMapBuildURLs(t *testing.T) {
 				Height: 300,
 				Format: "png",
 			},
-			URL: "http://open.mapquestapi.com/staticmap/v4/getmap?key=" + testKey + "&center=48.151313%2C11.541650&imagetype=png&size=500%2C300&zoom=9",
+			URL: "http://open.mapquestapi.com/staticmap/v4/getmap?center=48.151313,11.541650&size=500,300&zoom=9&imagetype=png&key=" + testKey,
 		},
 	}
 

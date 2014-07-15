@@ -55,56 +55,58 @@ func (api *StaticMapAPI) buildURL(req *StaticMapRequest) (string, error) {
 	}
 
 	// Add key and other parameters to the query string
-	q := u.Query()
+	qs := make([]string, 0)
+
 	if req.Center != nil {
 		pt := *req.Center
-		q.Set("center", fmt.Sprintf("%f,%f", pt.Latitude, pt.Longitude))
+		qs = append(qs, fmt.Sprintf("center=%f,%f", pt.Latitude, pt.Longitude))
 	}
 	if req.Bestfit != nil {
 		box := *req.Bestfit
-		q.Set("bestfit", fmt.Sprintf("%f,%f,%f,%f",
+		qs = append(qs, fmt.Sprintf("bestfit=%f,%f,%f,%f",
 			box.A.Latitude, box.A.Longitude,
 			box.B.Latitude, box.B.Longitude))
 	}
 	if req.Margin > 0 {
-		q.Set("margin", fmt.Sprintf("%d", req.Margin))
+		qs = append(qs, fmt.Sprintf("margin=%d", req.Margin))
 	}
-	q.Set("size", fmt.Sprintf("%d,%d", req.Width, req.Height))
+	qs = append(qs, fmt.Sprintf("size=%d,%d", req.Width, req.Height))
 	if req.Zoom > 0 {
-		q.Set("zoom", fmt.Sprintf("%d", req.Zoom))
+		qs = append(qs, fmt.Sprintf("zoom=%d", req.Zoom))
 	}
 	if req.Scale > 0 {
-		q.Set("scale", fmt.Sprintf("%d", req.Scale))
+		qs = append(qs, fmt.Sprintf("scale=%d", req.Scale))
 	}
 	if req.Type != "" {
-		q.Set("type", req.Type)
+		qs = append(qs, fmt.Sprintf("type=%s", url.QueryEscape(req.Type)))
 	}
 	if req.Format != "" {
-		q.Set("imagetype", req.Format)
+		qs = append(qs, fmt.Sprintf("imagetype=%s", url.QueryEscape(req.Format)))
 	}
 	if len(req.PointsOfInterest) > 0 {
 		parts := make([]string, len(req.PointsOfInterest))
 		for i, poi := range req.PointsOfInterest {
 			if poi.OffsetX > 0 || poi.OffsetY > 0 {
 				parts[i] = fmt.Sprintf("%s,%f,%f,%d,%d",
-					poi.Label,
+					url.QueryEscape(poi.Label),
 					poi.Latitude,
 					poi.Longitude,
 					poi.OffsetX,
 					poi.OffsetY)
 			} else {
 				parts[i] = fmt.Sprintf("%s,%f,%f",
-					poi.Label,
+					url.QueryEscape(poi.Label),
 					poi.Latitude,
 					poi.Longitude)
 			}
 		}
-		q.Set("pois", strings.Join(parts, "|"))
+		qs = append(qs, fmt.Sprintf("pois=%s", strings.Join(parts, "|")))
 	}
 
 	// Key has to be handled specifically here, because
 	// the MapQuest API seems to not like the key URL-encoded
-	u.RawQuery = fmt.Sprintf("key=%s&%s", api.c.key, q.Encode())
+	qs = append(qs, fmt.Sprintf("key=%s", api.c.key)) // Do not escape, MapQuest won't like it
+	u.RawQuery = strings.Join(qs, "&")
 	return u.String(), nil
 }
 
