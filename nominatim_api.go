@@ -121,15 +121,15 @@ type NominatimSearchResult struct {
 		StateDistrict string `json:"state_district,omitempty"`
 		Suburb        string `json:"suburb,omitempty"`
 	} `json:"address,omitempty"`
-	BoundingBox []string `json:"boundingbox,omitempty"`
-	Class       string   `json:"class,omitempty"`
-	DisplayName string   `json:"display_name,omitempty"`
-	Importance  float64  `json:"importance,omitempty"`
-	Latitude    float64  `json:"lat,string,omitempty"`
-	Longitude   float64  `json:"lon,string,omitempty"`
-	OSMId       string   `json:"osm_id,omitempty"`
-	OSMType     string   `json:"osm_type,omitempty"`
-	PlaceId     string   `json:"place_id,omitempty"`
-	Type        string   `json:"type,omitempty"`
-	License     string   `json:"licence,omitempty"` // typo in API?
+	//BoundingBox []float64 `json:"boundingbox,omitempty"`
+	Class       string  `json:"class,omitempty"`
+	DisplayName string  `json:"display_name,omitempty"`
+	Importance  float64 `json:"importance,omitempty"`
+	Latitude    float64 `json:"lat,string,omitempty"`
+	Longitude   float64 `json:"lon,string,omitempty"`
+	OSMId       string  `json:"osm_id,omitempty"`
+	OSMType     string  `json:"osm_type,omitempty"`
+	PlaceId     string  `json:"place_id,omitempty"`
+	Type        string  `json:"type,omitempty"`
+	License     string  `json:"licence,omitempty"` // typo in API?
 }
