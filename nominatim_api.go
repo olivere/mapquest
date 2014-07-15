@@ -50,7 +50,28 @@ func (api *NominatimAPI) buildSearchURL(req *NominatimSearchRequest) (string, er
 	// Add key and other parameters to the query string
 	q := u.Query()
 	q.Set("format", "json")
-	q.Set("q", req.Query)
+	if req.Query != "" {
+		q.Set("q", req.Query)
+	} else {
+		if req.Street != "" {
+			q.Set("street", req.Street)
+		}
+		if req.City != "" {
+			q.Set("city", req.City)
+		}
+		if req.County != "" {
+			q.Set("county", req.County)
+		}
+		if req.State != "" {
+			q.Set("state", req.State)
+		}
+		if req.Country != "" {
+			q.Set("country", req.Country)
+		}
+		if req.PostalCode != "" {
+			q.Set("postalcode", req.PostalCode)
+		}
+	}
 	q.Set("addressdetails", "1")
 	if req.Limit > 0 {
 		q.Set("limit", fmt.Sprintf("%d", req.Limit))
@@ -89,6 +110,12 @@ func (api *NominatimAPI) buildSearchURL(req *NominatimSearchRequest) (string, er
 
 type NominatimSearchRequest struct {
 	Query           string
+	Street          string
+	City            string
+	County          string
+	State           string
+	Country         string
+	PostalCode      string
 	Limit           int
 	CountryCodes    []string
 	ViewBox         []float64
